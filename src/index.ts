@@ -22,7 +22,7 @@ app.get("/overlay", (_req: express.Request, res: express.Response) => {
 });
 
 const server = http.createServer(app);
-server.listen(process.env.port || 8080);
+server.listen(process.env.PORT || 8080);
 
 const keeper = new ZooKeeper();
 

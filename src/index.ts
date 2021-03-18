@@ -11,15 +11,7 @@ dotenv.config();
 
 const app: express.Application = express();
 app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
-app.set("view engine", "pug");
 app.use(express.static("public"));
-
-app.get("/panel", (_req: express.Request, res: express.Response) => {
-  res.render("panel");
-});
-app.get("/overlay", (_req: express.Request, res: express.Response) => {
-  res.render("overlay");
-});
 
 const server = http.createServer(app);
 server.listen(process.env.PORT || 8080);

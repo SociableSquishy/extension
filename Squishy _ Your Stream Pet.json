@@ -7,6 +7,28 @@
     {
       "channelId": "265737932",
       "configurationAnchor": "panel",
+      "displayChannelName": "melkeydev",
+      "features": {
+        "isBitsEnabled": true,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "1",
+      "isPopout": false,
+      "label": "",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "panel",
+      "viewerType": "Logged-In Viewer"
+    },
+    {
+      "channelId": "265737932",
+      "configurationAnchor": "panel",
       "displayChannelName": "lucecarter",
       "features": {
         "isBitsEnabled": false,
@@ -28,52 +50,52 @@
     }
   ],
   "manifest": {
-    "anchor": "panel",
+    "anchor": "video_overlay",
     "assetUrls": [],
     "authorName": "SociableSteve",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "http://localhost:8080/config",
+    "configUrl": "http://localhost:8080/config.html",
     "configurationLocation": "none",
-    "description": "",
+    "description": "Squishy is your stream pet friend. Chatting in chat and donating bits will keep Squishy happy and healthy.",
     "eulaTosUrl": "",
     "hasChatSupport": false,
-    "iconUrl": "",
-    "iconUrls": {},
+    "iconUrl": "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/logo04d4ba2a-9785-420c-a4af-10da7d577133",
+    "iconUrls": {
+      "100x100": "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/logo04d4ba2a-9785-420c-a4af-10da7d577133",
+      "24x24": "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/taskbara70aec40-38fb-473e-b702-d8018a25bdec",
+      "300x200": "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/discovery7892583e-0b6d-479b-8216-13a669f1d855"
+    },
     "id": "05mqldmxz7f8bvttoub63klak7jqyb",
     "installationCount": -42,
     "liveConfigUrl": "",
     "name": "Squishy :: Your Stream Pet",
-    "panelHeight": 300,
+    "panelHeight": 0,
     "privacyPolicyUrl": "",
     "requestIdentityLink": false,
     "requiredBroadcasterAbilities": [],
-    "screenshotUrls": [],
+    "screenshotUrls": [
+      "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/screenshot71308abe-875c-4888-9dd9-ba961fa7bff3"
+    ],
     "sku": "",
     "state": "Testing",
     "subscriptionsSupportLevel": "none",
-    "summary": "",
+    "summary": "Add a pet to your stream. Your chat helps keep the pet happy and healthy.",
     "supportEmail": "steve@madhouseminers.com",
     "vendorCode": "",
     "version": "0.0.1",
     "viewerSummary": "",
-    "viewerUrl": "http://localhost:8080/panel",
+    "viewerUrl": "",
     "viewerUrls": {
-      "panel": "http://localhost:8080/panel",
-      "videoOverlay": "http://localhost:8080/overlay"
+      "videoOverlay": "http://localhost:8080/overlay.html"
     },
     "views": {
-      "panel": {
-        "viewerUrl": "http://localhost:8080/panel",
-        "height": 300,
-        "canLinkExternalContent": false
-      },
       "videoOverlay": {
-        "viewerUrl": "http://localhost:8080/overlay",
+        "viewerUrl": "http://localhost:8080/overlay.html",
         "canLinkExternalContent": false
       },
       "config": {
-        "viewerUrl": "http://localhost:8080/config",
+        "viewerUrl": "http://localhost:8080/config.html",
         "canLinkExternalContent": false
       }
     },

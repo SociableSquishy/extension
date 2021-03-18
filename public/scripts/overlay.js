@@ -31,7 +31,11 @@ function loop() {
   if (delta + position + pet_sprite.clientWidth >= window.innerWidth)
     direction = -1;
   pet_sprite.style.left = `${position + delta}px`;
-  pet_sprite.style.transform = `scaleX(${direction})`;
+  if (delta < 0) {
+    pet_sprite.style.transform = `scaleX(-1)`;
+  } else {
+    pet_sprite.style.transform = `scaleX(1)`;
+  }
   requestAnimationFrame(loop);
 }
 

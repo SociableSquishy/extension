@@ -44,6 +44,7 @@ class Pet extends EventEmitter {
       channels: [this.owner.toLowerCase()],
     });
     this.chatClient.on("message", this.handleChatMessage.bind(this));
+    this.chatClient.on("ban", this.handleBanMessage.bind(this));
     this.chatClient.connect().then(() => console.log("connected"));
   }
 
@@ -57,6 +58,10 @@ class Pet extends EventEmitter {
       this.emit("hello", user);
       this.saidHelloTo.add(user);
     }
+  }
+
+  handleBanMessage(_channel: string, username: string) {
+    this.emit("ban", username);
   }
 
   getCurrentState() {

@@ -6,6 +6,7 @@ class Socket {
     this.pet.on("activity", this.activity.bind(this));
     this.pet.on("status", this.status.bind(this));
     this.pet.on("hello", this.hello.bind(this));
+    this.pet.on("ban", this.ban.bind(this));
     this.send({ type: "initialise", state: pet.getCurrentState() });
   }
 
@@ -23,6 +24,10 @@ class Socket {
 
   hello(username: string) {
     this.send({ type: "hello", username });
+  }
+
+  ban(username: string) {
+    this.send({ type: "ban", username });
   }
 }
 

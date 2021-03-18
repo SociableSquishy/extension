@@ -35,6 +35,9 @@ function speak(message) {
 function sayHello(username) {
   speak(`YAY! ${username} is here`);
 }
+function sayBan(username) {
+  speak(`You've been naughty, ${username}! You're outta here!`);
+}
 
 let direction = "1";
 let speaking = false;
@@ -80,10 +83,7 @@ function loop() {
 
 twitch.onAuthorized((auth) => {
   let url = new URL(document.location.href);
-  const ws = new WebSocket(
-    `${url.protocol.replace("http", "ws")}//${url.hostname}:${url.port}/ws`,
-    [auth.token]
-  );
+  const ws = new WebSocket(`ws://localhost:8080/ws`, [auth.token]);
   ws.addEventListener("message", (msg) => {
     const message = JSON.parse(msg.data);
 
@@ -102,6 +102,9 @@ twitch.onAuthorized((auth) => {
         break;
       case "hello":
         sayHello(message.username);
+        break;
+      case "ban":
+        sayBan(message.username);
         break;
     }
   });

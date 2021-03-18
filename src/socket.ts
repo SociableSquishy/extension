@@ -4,6 +4,7 @@ import Pet from "./pet";
 class Socket {
   constructor(private socket: ws, private pet: Pet) {
     this.pet.on("activity", this.activity.bind(this));
+    this.pet.on("status", this.status.bind(this));
     this.send({ type: "initialise", state: pet.getCurrentState() });
   }
 
@@ -13,6 +14,10 @@ class Socket {
 
   activity(new_activity: string) {
     this.send({ type: "activity", activity: new_activity });
+  }
+
+  status(new_status: string) {
+    this.send({ type: "status", status: new_status });
   }
 }
 

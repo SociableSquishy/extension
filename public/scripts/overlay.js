@@ -60,6 +60,9 @@ twitch.onAuthorized((auth) => {
       case "activity":
         setActivity(message.activity);
         break;
+      case "status":
+        setStats(message.status);
+        break;
     }
   });
 });

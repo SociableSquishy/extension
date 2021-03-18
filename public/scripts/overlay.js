@@ -91,7 +91,7 @@ twitch.onAuthorized((auth) => {
       case "initialise":
         setActivity(message.state.activity);
         setStats(message.state.stats);
-        document.getElementById("stats").style.opacity = 1;
+        // document.getElementById("stats").style.opacity = 1;
         loop();
         break;
       case "activity":

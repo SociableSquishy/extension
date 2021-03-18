@@ -24,7 +24,9 @@ async function getOauthToken() {
 }
 getOauthToken();
 
-export async function getChannelNameFromId(channel_id: string) {
+export async function getChannelNameFromId(
+  channel_id: string
+): Promise<string> {
   try {
     const response = await axios.get(
       `https://api.twitch.tv/helix/channels?broadcaster_id=${channel_id}`,
@@ -39,6 +41,26 @@ export async function getChannelNameFromId(channel_id: string) {
   } catch (e) {
     console.log(e);
     return channel_id;
+  }
+}
+
+export async function checkOnline(channel_name: string): Promise<boolean> {
+  try {
+    const response = await axios.get(
+      `https://api.twitch.tv/helix/search/channels?query=${channel_name}`,
+      {
+        headers: {
+          "Client-ID": process.env.TWITCH_CLIENT_ID,
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.data.filter(
+      (d) => d.broadcaster_login.toLowerCase() === channel_name.toLowerCase()
+    )[0].is_live;
+  } catch (e) {
+    console.log(e);
+    return false;
   }
 }
 

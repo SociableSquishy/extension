@@ -34,7 +34,11 @@ class Pet extends EventEmitter {
   chatClient: tmi.Client;
   saidHelloTo: Set<string> = new Set();
 
-  constructor(private owner: string, private stats = { ...defaultStats }) {
+  constructor(
+    private owner: string,
+    private online: boolean,
+    private stats = { ...defaultStats }
+  ) {
     super();
     this.timer = setInterval(this.doTick.bind(this), 5000);
     this.currentActivity = activities[0];
@@ -68,6 +72,8 @@ class Pet extends EventEmitter {
     return { activity: this.currentActivity, stats: this.stats };
   }
   doTick() {
+    if (!this.online) return;
+
     this.newActivity();
     this.updateSocial();
     this.updateFood();

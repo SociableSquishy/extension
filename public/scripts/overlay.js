@@ -81,9 +81,9 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-twitch.onAuthorized((auth) => {
-  let url = new URL(document.location.href);
-  const ws = new WebSocket(`ws://localhost:8080/ws`, [auth.token]);
+let ws;
+function connect(token) {
+  ws = new WebSocket(`ws://localhost:8080/ws`, [token]);
   ws.addEventListener("message", (msg) => {
     const message = JSON.parse(msg.data);
 
@@ -91,7 +91,7 @@ twitch.onAuthorized((auth) => {
       case "initialise":
         setActivity(message.state.activity);
         setStats(message.state.stats);
-        // document.getElementById("stats").style.opacity = 1;
+        document.getElementById("stats").style.opacity = 1;
         loop();
         break;
       case "activity":
@@ -108,4 +108,11 @@ twitch.onAuthorized((auth) => {
         break;
     }
   });
+  ws.addEventListener("close", () => {
+    setTimeout(() => connect(token), 1000);
+    ws = undefined;
+  });
+}
+twitch.onAuthorized((auth) => {
+  connect(auth.token);
 });

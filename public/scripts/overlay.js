@@ -38,6 +38,9 @@ function sayHello(username) {
 function sayBan(username) {
   speak(`You've been naughty, ${username}! You're outta here!`);
 }
+function saySub(username) {
+  speak(`Thank you for the sub ${username}! Welcome aboard friend!`);
+}
 
 let direction = "1";
 let speaking = false;
@@ -107,6 +110,9 @@ function connect(token) {
         break;
       case "ban":
         sayBan(message.username);
+        break;
+      case "sub":
+        saySub(message.username);
         break;
     }
   });

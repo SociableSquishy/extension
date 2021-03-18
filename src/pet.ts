@@ -11,7 +11,7 @@ interface Stat {
 }
 interface StatList {
   Happiness: Stat;
-  Hunger: Stat;
+  // Hunger: Stat; // NEEDS BITS
   Health: Stat;
   Social: Stat;
 }
@@ -27,7 +27,7 @@ const activities: Activity[] = [
 ];
 const defaultStats: StatList = {
   Happiness: { max: 5, current: 4 },
-  Hunger: { max: 5, current: 3 },
+  // Hunger: { max: 5, current: 3 },
   Health: { max: 5, current: 2 },
   Social: { max: 5, current: 1 },
 };
@@ -54,6 +54,7 @@ class Pet extends EventEmitter {
     });
     this.chatClient.on("message", this.handleChatMessage.bind(this));
     this.chatClient.on("ban", this.handleBanMessage.bind(this));
+    this.chatClient.on("subscription", this.handleSubMessage.bind(this));
     this.chatClient.connect().then(() => console.log("connected"));
   }
 
@@ -76,6 +77,20 @@ class Pet extends EventEmitter {
 
   handleBanMessage(_channel: string, username: string) {
     this.emit("ban", username);
+    this.stats.Happiness.current = Math.max(
+      1,
+      this.stats.Happiness.current - 2
+    );
+    this.emit("status", this.stats);
+  }
+
+  handleSubMessage(_channel: string, username: string) {
+    this.emit("sub", username);
+    this.stats.Happiness.current = Math.min(
+      5,
+      this.stats.Happiness.current + 2
+    );
+    this.emit("status", this.stats);
   }
 
   getCurrentState() {
@@ -86,8 +101,7 @@ class Pet extends EventEmitter {
 
     this.newActivity();
     this.updateSocial();
-    this.updateFood();
-    this.updateHappiness();
+    // this.updateFood();
     this.updateHealth();
     this.emit("status", this.stats);
   }
@@ -110,17 +124,11 @@ class Pet extends EventEmitter {
     }
   }
 
-  updateFood() {
-    this.stats.Hunger.current = Math.floor(
-      Math.random() * this.stats.Hunger.max
-    );
-  }
-
-  updateHappiness() {
-    this.stats.Happiness.current = Math.floor(
-      Math.random() * this.stats.Happiness.max
-    );
-  }
+  // updateFood() {
+  //   this.stats.Hunger.current = Math.floor(
+  //     Math.random() * this.stats.Hunger.max
+  //   );
+  // }
 
   updateHealth() {
     this.stats.Health.current = Math.floor(

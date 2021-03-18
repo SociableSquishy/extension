@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import * as tmi from "tmi.js";
 
 interface Activity {
   name: string;
@@ -30,11 +31,32 @@ const defaultStats: StatList = {
 class Pet extends EventEmitter {
   timer: NodeJS.Timer;
   currentActivity: Activity;
+  chatClient: tmi.Client;
+  saidHelloTo: Set<string> = new Set();
 
-  constructor(private stats = { ...defaultStats }) {
+  constructor(private owner: string, private stats = { ...defaultStats }) {
     super();
     this.timer = setInterval(this.doTick.bind(this), 5000);
     this.currentActivity = activities[0];
+
+    this.chatClient = new tmi.Client({
+      connection: { reconnect: true },
+      channels: [this.owner.toLowerCase()],
+    });
+    this.chatClient.on("message", this.handleChatMessage.bind(this));
+    this.chatClient.connect().then(() => console.log("connected"));
+  }
+
+  handleChatMessage(
+    _channel: string,
+    userstate: tmi.ChatUserstate,
+    _message: string
+  ) {
+    const user = userstate["display-name"];
+    if (!this.saidHelloTo.has(user)) {
+      this.emit("hello", user);
+      this.saidHelloTo.add(user);
+    }
   }
 
   getCurrentState() {

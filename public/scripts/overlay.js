@@ -1,6 +1,10 @@
 const twitch = window.Twitch.ext;
 
 const pet_sprite = document.getElementById("pet-sprite");
+const pet_container = document.getElementById("pet");
+const pet_speech = document.getElementById("pet-speech");
+const voice = new Audio("voice.mp3");
+
 let activity;
 function setActivity(newActivity) {
   activity = newActivity;
@@ -23,19 +27,54 @@ function setStats(newStats) {
   document.getElementById("stats").innerHTML = html;
 }
 
+const message_queue = [];
+function speak(message) {
+  message_queue.push(message);
+}
+
+function sayHello(username) {
+  speak(`YAY! ${username} is here`);
+}
+
 let direction = "1";
+let speaking = false;
+let speaking_since;
 function loop() {
+  if (!speaking && message_queue.length) {
+    speaking = true;
+    pet_speech.innerText = message_queue.shift();
+    pet_speech.style.opacity = 1;
+    voice.play();
+    setTimeout(() => {
+      speaking = false;
+      pet_speech.innerText = "";
+      pet_speech.style.opacity = 0;
+    }, 5000);
+  }
+  if (speaking) {
+    activity.speed = 0;
+    pet_sprite.src = "sprites/sitting.gif";
+  }
   const delta = activity.speed * direction;
-  const position = parseInt(pet_sprite.style.left || "0");
+  const position = parseInt(pet_container.style.left || "0");
   if (delta + position < 0) direction = 1;
-  if (delta + position + pet_sprite.clientWidth >= window.innerWidth)
+  if (delta + position + pet_container.clientWidth >= window.innerWidth)
     direction = -1;
-  pet_sprite.style.left = `${position + delta}px`;
+  pet_container.style.left = `${position + delta}px`;
   if (delta < 0) {
     pet_sprite.style.transform = `scaleX(-1)`;
   } else {
     pet_sprite.style.transform = `scaleX(1)`;
   }
+
+  if (position + delta > window.innerWidth / 2) {
+    pet_speech.style.right = 0;
+    pet_speech.style.left = "auto";
+  } else {
+    pet_speech.style.left = 0;
+    pet_speech.style.right = "auto";
+  }
+
   requestAnimationFrame(loop);
 }
 
@@ -45,8 +84,6 @@ twitch.onAuthorized((auth) => {
     `${url.protocol.replace("http", "ws")}//${url.hostname}:${url.port}/ws`,
     [auth.token]
   );
-  ws.addEventListener("open", console.log("connected"));
-  ws.addEventListener("error", console.log);
   ws.addEventListener("message", (msg) => {
     const message = JSON.parse(msg.data);
 
@@ -62,6 +99,9 @@ twitch.onAuthorized((auth) => {
         break;
       case "status":
         setStats(message.status);
+        break;
+      case "hello":
+        sayHello(message.username);
         break;
     }
   });

@@ -33,13 +33,20 @@
 
 #pet {
   position: absolute;
+  height: 128px;
+  width: 128px;
   bottom: 0;
   left: 0;
-  width: 100%;
 }
 
-#pet-sprite {
+#pet-speech {
+  bottom: 133px;
   position: absolute;
-  bottom: 0;
-  left: 0;
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 5px 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  white-space: nowrap;
 }

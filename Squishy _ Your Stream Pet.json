@@ -5,11 +5,11 @@
   "certificateExceptions": [],
   "extensionViews": [
     {
-      "channelId": "265737932",
-      "configurationAnchor": "panel",
-      "displayChannelName": "melkeydev",
+      "channelId": "76884091",
+      "configurationAnchor": "video_overlay",
+      "displayChannelName": "lucecarter",
       "features": {
-        "isBitsEnabled": true,
+        "isBitsEnabled": false,
         "isChatEnabled": false,
         "isSubscriptionStatusAvailable": false
       },
@@ -23,30 +23,8 @@
       "linked": false,
       "linkedUserId": "",
       "orientation": "Portrait",
-      "type": "panel",
-      "viewerType": "Logged-In Viewer"
-    },
-    {
-      "channelId": "265737932",
-      "configurationAnchor": "panel",
-      "displayChannelName": "lucecarter",
-      "features": {
-        "isBitsEnabled": false,
-        "isChatEnabled": false,
-        "isSubscriptionStatusAvailable": false
-      },
-      "frameSize": {
-        "width": 1280,
-        "height": 720
-      },
-      "id": "2",
-      "isPopout": false,
-      "label": "",
-      "linked": false,
-      "linkedUserId": "",
-      "orientation": "Portrait",
       "type": "video_overlay",
-      "viewerType": "Logged-Out Viewer"
+      "viewerType": "Broadcaster"
     }
   ],
   "manifest": {

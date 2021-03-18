@@ -5,6 +5,7 @@ class Socket {
   constructor(private socket: ws, private pet: Pet) {
     this.pet.on("activity", this.activity.bind(this));
     this.pet.on("status", this.status.bind(this));
+    this.pet.on("hello", this.hello.bind(this));
     this.send({ type: "initialise", state: pet.getCurrentState() });
   }
 
@@ -18,6 +19,10 @@ class Socket {
 
   status(new_status: string) {
     this.send({ type: "status", status: new_status });
+  }
+
+  hello(username: string) {
+    this.send({ type: "hello", username });
   }
 }
 

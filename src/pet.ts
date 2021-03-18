@@ -16,6 +16,9 @@ interface StatList {
   Social: Stat;
 }
 
+// Seconds until drop at levels 2, 3, 4, 5
+const socialRates = [600, 300, 60, 30];
+
 const activities: Activity[] = [
   { name: "walking", speed: 2 },
   { name: "sleeping", speed: 0 },
@@ -33,6 +36,7 @@ class Pet extends EventEmitter {
   currentActivity: Activity;
   chatClient: tmi.Client;
   saidHelloTo: Set<string> = new Set();
+  lastMessage: number;
 
   constructor(
     private owner: string,
@@ -40,6 +44,7 @@ class Pet extends EventEmitter {
     private stats = { ...defaultStats }
   ) {
     super();
+    this.lastMessage = Date.now();
     this.timer = setInterval(this.doTick.bind(this), 5000);
     this.currentActivity = activities[0];
 
@@ -57,6 +62,11 @@ class Pet extends EventEmitter {
     userstate: tmi.ChatUserstate,
     _message: string
   ) {
+    this.lastMessage = Date.now();
+    this.stats.Social.current = Math.min(
+      this.stats.Social.current + 1,
+      this.stats.Social.max
+    );
     const user = userstate["display-name"];
     if (!this.saidHelloTo.has(user)) {
       this.emit("hello", user);
@@ -72,7 +82,7 @@ class Pet extends EventEmitter {
     return { activity: this.currentActivity, stats: this.stats };
   }
   doTick() {
-    if (!this.online) return;
+    // if (!this.online) return;
 
     this.newActivity();
     this.updateSocial();
@@ -90,9 +100,14 @@ class Pet extends EventEmitter {
   }
 
   updateSocial() {
-    this.stats.Social.current = Math.floor(
-      Math.random() * this.stats.Social.max
-    );
+    if (this.stats.Social.current <= 1) return;
+
+    if (
+      socialRates[this.stats.Social.current - 2] <=
+      Math.floor((Date.now() - this.lastMessage) / 1000)
+    ) {
+      this.stats.Social.current--;
+    }
   }
 
   updateFood() {

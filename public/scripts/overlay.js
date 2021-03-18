@@ -42,7 +42,9 @@ function sayBan(username) {
 let direction = "1";
 let speaking = false;
 let speaking_since;
+let looping = false;
 function loop() {
+  looping = true;
   if (!speaking && message_queue.length) {
     speaking = true;
     pet_speech.innerText = message_queue.shift();
@@ -92,7 +94,7 @@ function connect(token) {
         setActivity(message.state.activity);
         setStats(message.state.stats);
         document.getElementById("stats").style.opacity = 1;
-        loop();
+        if (!looping) loop();
         break;
       case "activity":
         setActivity(message.activity);

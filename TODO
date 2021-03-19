@@ -1,13 +1,20 @@
-Stats tick - update stats over time and with events
+Stats tick - update stats over time and with events (DONE)
 - Social (DONE)
-- Happiness
+- Happiness (DONE)
 -- Ban -2 (DONE)
 -- Sub +2 (DONE)
--- Follow +1
-- Health
-
-Streamer online/offline subscription
+- Health (DONE)
 ----- 0.0.1 DONE -----
 
-Performance of back-end!
+Happiness
+- Follow +1
+Streamer online/offline subscription
+----- 0.0.2 -----
+
 Bits panel
+----- 0.0.3 -----
+
+Performance of back-end
+- Can we increase performance?
+- Is there an issue?
+----- 1.0.0 -----

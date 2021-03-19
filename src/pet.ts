@@ -28,8 +28,8 @@ const activities: Activity[] = [
 const defaultStats: StatList = {
   Happiness: { max: 5, current: 4 },
   // Hunger: { max: 5, current: 3 },
-  Health: { max: 5, current: 2 },
-  Social: { max: 5, current: 1 },
+  Health: { max: 5, current: 4 },
+  Social: { max: 5, current: 4 },
 };
 class Pet extends EventEmitter {
   timer: NodeJS.Timer;
@@ -97,10 +97,11 @@ class Pet extends EventEmitter {
     return { activity: this.currentActivity, stats: this.stats };
   }
   doTick() {
-    // if (!this.online) return;
+    if (!this.online) return;
 
     this.newActivity();
     this.updateSocial();
+    this.updateHappiness();
     // this.updateFood();
     this.updateHealth();
     this.emit("status", this.stats);
@@ -124,6 +125,14 @@ class Pet extends EventEmitter {
     }
   }
 
+  updateHappiness() {
+    if (Math.random() * 100 <= 1)
+      this.stats.Happiness.current = Math.max(
+        1,
+        this.stats.Happiness.current - 1
+      );
+  }
+
   // updateFood() {
   //   this.stats.Hunger.current = Math.floor(
   //     Math.random() * this.stats.Hunger.max
@@ -131,9 +140,12 @@ class Pet extends EventEmitter {
   // }
 
   updateHealth() {
-    this.stats.Health.current = Math.floor(
-      Math.random() * this.stats.Health.max
-    );
+    const statKeys = Object.keys(this.stats);
+    if (statKeys.every((stat) => this.stats[stat].current === 1)) {
+      this.stats.Health.current = Math.max(1, this.stats.Health.current - 1);
+    } else if (statKeys.some((stat) => this.stats[stat].current >= 3)) {
+      this.stats.Health.current = Math.min(5, this.stats.Health.current + 1);
+    }
   }
 }
 

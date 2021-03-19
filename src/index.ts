@@ -46,7 +46,7 @@ export async function getChannelNameFromId(
 
 export async function checkOnline(channel_name: string): Promise<boolean> {
   try {
-    const response = await axios.get(
+    const response = await axios.get<{data: {broadcaster_login: string, is_live: boolean}[]}>(
       `https://api.twitch.tv/helix/search/channels?query=${channel_name}`,
       {
         headers: {
@@ -86,7 +86,7 @@ websocket.on(
         Buffer.from(process.env.JWT_SECRET, "base64")
       ) as IToken;
 
-      const s = new Socket(socket, await keeper.get(token.channel_id));
+      new Socket(socket, await keeper.get(token.channel_id));
     } catch (e) {
       socket.close();
     }

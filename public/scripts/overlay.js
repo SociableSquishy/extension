@@ -86,21 +86,17 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-let ws;
-function connect(token) {
-  ws = new WebSocket(`ws://localhost:8080/ws`, [token]);
-  ws.addEventListener("message", (msg) => {
-    const message = JSON.parse(msg.data);
+function connect() {
+	console.log('connect');
+  twitch.listen("broadcast", (_target, _contentType, msg) => {
+	console.log(msg);
+    const message = JSON.parse(msg);
 
     switch (message.type) {
-      case "initialise":
-        setActivity(message.state.activity);
-        setStats(message.state.stats);
-        document.getElementById("stats").style.opacity = 1;
-        if (!looping) loop();
-        break;
       case "activity":
         setActivity(message.activity);
+        document.getElementById("stats").style.opacity = 1;
+        if (!looping) loop();
         break;
       case "status":
         setStats(message.status);
@@ -116,11 +112,7 @@ function connect(token) {
         break;
     }
   });
-  ws.addEventListener("close", () => {
-    setTimeout(() => connect(token), 1000);
-    ws = undefined;
-  });
 }
-twitch.onAuthorized((auth) => {
-  connect(auth.token);
+twitch.onAuthorized(() => {
+  connect();
 });

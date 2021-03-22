@@ -33,9 +33,9 @@
     "authorName": "SociableSteve",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "http://localhost:8080/config.html",
+    "configUrl": "http://localhost:5000/config.html",
     "configurationLocation": "none",
-    "description": "Squishy is your stream pet friend. Chatting in chat and donating bits will keep Squishy happy and healthy.",
+    "description": "Squishy is your stream pet friend. Chatting in chat and donating bits will keep Squishy happy and healthy.\n\nAll statistics range from 1 heart to 5 hearts.\n\nThe Social statistic is affected by how ofter people talk in chat.\nThe Happiness statistic is affected by:\n  - Bans = -2\n  - Subscriptions = +2\n  - Followes = +1\nThe Health statistic will go down if all other stats are at 1, and up if any other stat is at 3 or above\n\nSquishy will welcome chatters the first time they chat during your stream!",
     "eulaTosUrl": "",
     "hasChatSupport": false,
     "iconUrl": "https://extensions-discovery-images.twitch.tv/05mqldmxz7f8bvttoub63klak7jqyb/0.0.1/logo04d4ba2a-9785-420c-a4af-10da7d577133",
@@ -65,15 +65,15 @@
     "viewerSummary": "",
     "viewerUrl": "",
     "viewerUrls": {
-      "videoOverlay": "http://localhost:8080/overlay.html"
+      "videoOverlay": "http://localhost:5000/overlay.html"
     },
     "views": {
       "videoOverlay": {
-        "viewerUrl": "http://localhost:8080/overlay.html",
+        "viewerUrl": "http://localhost:5000/overlay.html",
         "canLinkExternalContent": false
       },
       "config": {
-        "viewerUrl": "http://localhost:8080/config.html",
+        "viewerUrl": "http://localhost:5000/config.html",
         "canLinkExternalContent": false
       }
     },
